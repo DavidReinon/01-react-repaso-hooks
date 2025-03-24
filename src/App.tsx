@@ -1,22 +1,13 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { useCounter } from "./hooks/useCounter";
+// import CounterApp from "./actividades/CounterApp";
+import TodoApp from "./actividades/TodoApp";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const {count, incrementent, decrement, reset} = useCounter(10);
-
-  return (
-    <>
-      <h1>Contador de Pruebas: {count}</h1>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <button onClick={incrementent} >+</button>
-        <button onClick={reset}>reset</button>
-        <button onClick={decrement}>-</button>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <TodoApp />
+        </>
+    );
 }
 
 export default App;
