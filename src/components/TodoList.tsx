@@ -1,16 +1,17 @@
 import TodoItem from "./TodoItem";
-import { TodoState, TodoAction } from "../services/todoReducer";
+import { TodoState } from "../services/todoReducer";
 
 interface Props {
   todos: TodoState[];
-  dispatch: React.Dispatch<TodoAction>;
+  handleEditTodo: (id: number) => void;
+  handleDeleteTodo: (id: number) => void;
 }
 
-export default function TodoList({ todos, dispatch }: Props) {
+export default function TodoList({ todos, handleEditTodo, handleDeleteTodo }: Props) {
   return (
     <ul>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} dispatch={dispatch} />
+        <TodoItem key={todo.id} todo={todo} handleDeleteTodo={handleDeleteTodo} handleEditTodo={handleEditTodo}  />
       ))}
     </ul>
   );

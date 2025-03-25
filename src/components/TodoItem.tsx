@@ -1,28 +1,30 @@
-import React from "react";
-import { TodoState, TodoAction } from "../services/todoReducer";
-
+import { TodoState } from "../services/todoReducer";
 interface Props {
     todo: TodoState;
-    dispatch: React.Dispatch<TodoAction>;
+    handleEditTodo: (id: number) => void;
+    handleDeleteTodo: (id: number) => void;
 }
 
-export default function TodoItem({ todo, dispatch }: Props) {
+export default function TodoItem({
+    todo,
+    handleEditTodo,
+    handleDeleteTodo,
+}: Props) {
     return (
         <li style={{ marginBottom: 3 }}>
-            <p
-                onClick={() => dispatch({ type: "EDIT", payload: todo.id })}
-                style={{
-                    marginRight: 1,
-                    textDecorationLine: todo.done ? "line-through" : "",
-                }}
-            >
-                {todo.text}
-            </p>
-            <button
-                onClick={() => dispatch({ type: "REMOVE", payload: todo.id })}
-            >
-                Eliminar
-            </button>
+            <div>
+                <p
+                    onClick={() => handleEditTodo(todo.id)}
+                    style={{
+                        textDecorationLine: todo.done ? "line-through" : "",
+                    }}
+                >
+                    {todo.text}
+                </p>
+                <button onClick={() => handleDeleteTodo(todo.id)}>
+                    Eliminar
+                </button>
+            </div>
         </li>
     );
 }

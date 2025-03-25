@@ -1,29 +1,22 @@
-import { useReducer, useEffect, useState } from "react";
-import { todoReducer, TodoAction, TodoState } from "../services/todoReducer";
+import { useState } from "react";
 import TodoList from "../components/TodoList";
-import TodoItem from "../components/TodoItem";
-
-const initialState: TodoState[] = JSON.parse(
-    localStorage.getItem("todos") || "[]"
-);
+import { useTodos } from "../hooks/useTodos";
 
 export default function TodoApp() {
-    const [state, dispatch] = useReducer(todoReducer, initialState);
+    const { todos, handleDeleteTodo, handleEditTodo, handleNewTodo } =
+        useTodos();
     const [newTodo, setNewTodo] = useState("");
-
-    useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(state));
-    }, [state]);
 
     const handleAdd = (e: React.FormEvent) => {
         e.preventDefault();
         if (newTodo.trim() === "") return;
-        dispatch({ type: "ADD", payload: newTodo });
+        handleNewTodo(newTodo);
         setNewTodo("");
     };
 
     return (
         <div
+            className="mt-5"
             style={{
                 display: "flex",
                 justifyContent: "space-evenly",
@@ -31,7 +24,11 @@ export default function TodoApp() {
         >
             <div>
                 <h3>Lista de Tareas</h3>
-                <TodoList todos={state} dispatch={dispatch} />
+                <TodoList
+                    todos={todos}
+                    handleDeleteTodo={handleDeleteTodo}
+                    handleEditTodo={handleEditTodo}
+                />
             </div>
             <form onSubmit={handleAdd}>
                 <input
@@ -39,7 +36,7 @@ export default function TodoApp() {
                     value={newTodo}
                     onChange={(e) => setNewTodo(e.target.value)}
                 />
-                <button style={{ marginLeft: 10 }} type="submit">
+                <button className="btn btn-primary ms-3" type="submit">
                     Añadir
                 </button>
             </form>
